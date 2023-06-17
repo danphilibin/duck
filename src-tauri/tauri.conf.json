@@ -1,0 +1,46 @@
+{
+  "build": {
+    "beforeDevCommand": "yarn dev",
+    "beforeBuildCommand": "yarn build",
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist",
+    "withGlobalTauri": false
+  },
+  "package": {
+    "productName": "Duck",
+    "version": "0.0.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
+      },
+      "window": {
+        "startDragging": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "com.danphilibin.duck",
+      "icon": ["icons/duck_icon.png", "icons/icon.icns"]
+    },
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "resizable": true,
+        "title": "duck",
+        "width": 360,
+        "height": 570,
+        "alwaysOnTop": true,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true
+      }
+    ]
+  }
+}
