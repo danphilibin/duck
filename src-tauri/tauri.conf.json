@@ -19,6 +19,17 @@
       },
       "window": {
         "startDragging": true
+      },
+      "fs": {
+        "scope": ["$APP/*", "$DESKTOP/*", "$DOCUMENT/**"],
+        "readFile": true,
+        "writeFile": true,
+        "readDir": true,
+        "createDir": true,
+        "exists": true
+      },
+      "path": {
+        "all": true
       }
     },
     "bundle": {

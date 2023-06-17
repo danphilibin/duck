@@ -3,43 +3,64 @@
 @tailwind utilities;
 
 .ProseMirror {
+  @apply text-slate-900;
+
   > * + * {
     margin-top: 0.75em;
   }
 
-  ul,
-  ol {
-    padding: 0 1rem;
+  h1 {
+    @apply text-lg font-semibold;
   }
 
-  h1,
-  h2,
+  h2 {
+    @apply text-base font-semibold;
+  }
+
   h3,
-  h4,
-  h5,
-  h6 {
-    line-height: 1.1;
+  h4 {
+    @apply mt-4 text-sm font-semibold uppercase tracking-wider;
+  }
+  h4 {
+    @apply text-blue-500;
   }
 
   img {
-    max-width: 100%;
-    height: auto;
+    @apply max-w-full h-auto;
   }
 
   blockquote {
-    padding-left: 1rem;
-    border-left: 2px solid rgba(#0d0d0d, 0.1);
+    @apply pl-3 border-l-[3px] border-slate-300 text-slate-600;
   }
 
   hr {
-    @apply border-0 border-t border-slate-300 my-8 mx-0;
+    @apply border-0 border-t border-slate-300 my-5 mx-0;
   }
 
+  /* placeholder */
   p.is-editor-empty:first-child::before {
-    color: #adb5bd;
-    content: attr(data-placeholder);
-    float: left;
-    height: 0;
-    pointer-events: none;
+    @apply text-slate-400 float-left h-0 pointer-events-none content-[attr(data-placeholder)];
+  }
+
+  ul,
+  ol {
+    @apply ml-2;
+  }
+
+  ul li,
+  ol li {
+    @apply relative pl-4;
+  }
+  ul li:before {
+    @apply absolute top-0 left-0;
+    content: "-";
+  }
+  ol li:before {
+    @apply absolute top-0 left-0;
+    content: counter(list-item, decimal) ".";
+  }
+
+  pre {
+    @apply my-4 bg-slate-100 rounded-md p-3 !text-xs;
   }
 }

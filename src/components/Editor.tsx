@@ -1,9 +1,11 @@
+import { useState } from "react";
 import Link from "@tiptap/extension-link";
 import Code from "@tiptap/extension-code";
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 import Placeholder from "@tiptap/extension-placeholder";
+import { useSaveContent } from "../utils/editor";
 
 const LinkExt = Link.configure({
   HTMLAttributes: {
@@ -28,16 +30,6 @@ const PlaceholderExt = Placeholder.configure({
   placeholder: "Start typing...",
 });
 
-const testContent = `
-<p>Hello world! <a href="#">This is a link.</a></p>
-<p>This is a new paragraph with <strong>bold text</strong> and <em>italic text</em>, and some <code>inline code</code> too.</p>
-<p>Here's a bulleted list:</p>
-<ul>
-  <li>Item 1</li>
-  <li>Item 2</li>
-</ul>
-`;
-
 function MarkdownPreview({ editor }: { editor: Editor | null }) {
   return (
     <div className="mt-4 text-sm">
@@ -48,21 +40,40 @@ function MarkdownPreview({ editor }: { editor: Editor | null }) {
   );
 }
 
-const EditorComponent = () => {
+const StarterKitExt = StarterKit.configure({
+  code: {
+    HTMLAttributes: {
+      class:
+        "bg-slate-100 rounded-md px-1 py-0.5 group-hover:bg-slate-200 transition-colors duration-100 align-center",
+    },
+  },
+});
+
+const EditorComponent = ({
+  initialContent,
+}: {
+  initialContent: string | null;
+}) => {
+  // this prevents hot reloads from resetting the editor content.
+  const [content, setContent] = useState<string | null>(initialContent);
+
   const editor = useEditor({
     extensions: [StarterKit, LinkExt, CodeExt, MarkdownExt, PlaceholderExt],
-    // content: testContent,
-    content: localStorage.getItem("content") || "",
+    content,
     editorProps: {
       attributes: {
-        class:
-          "min-h-[200px] focus:outline-none hover:bg-slate-100 text-sm p-3 transition-colors duration-100 rounded-lg group",
+        class: "min-h-[200px] focus:outline-none text-sm p-3 rounded-lg group",
       },
+    },
+    onUpdate: ({ editor }) => {
+      setContent(editor.getHTML());
     },
   });
 
+  useSaveContent(content, editor);
+
   return (
-    <div className="absolute inset-0">
+    <div>
       <EditorContent editor={editor} />
       {/* <MarkdownPreview editor={editor} /> */}
     </div>
