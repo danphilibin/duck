@@ -8,6 +8,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { useSaveContent } from "../utils/editor";
 
 const LinkExt = Link.configure({
+  autolink: false,
   HTMLAttributes: {
     class:
       "underline decoration-slate-400 underline-offset-2 cursor-pointer hover:opacity-50",
