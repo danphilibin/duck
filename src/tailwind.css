@@ -44,7 +44,7 @@ html {
   -o-tab-size: 4;
      tab-size: 4;
   /* 3 */
-  font-family: ColfaxAI, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   /* 4 */
   font-feature-settings: normal;
   /* 5 */
@@ -534,53 +534,81 @@ video {
   inset: 0px;
 }
 
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.inline {
+  display: inline;
+}
+
 .h-8 {
   height: 2rem;
+}
+
+.min-h-\[200px\] {
+  min-height: 200px;
 }
 
 .cursor-pointer {
   cursor: pointer;
 }
 
+.whitespace-pre-wrap {
+  white-space: pre-wrap;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
 
-.p-2 {
-  padding: 0.5rem;
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
+.bg-slate-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
 .p-3 {
   padding: 0.75rem;
 }
 
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.py-0\.5 {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+}
+
 .pt-0 {
   padding-top: 0px;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .italic {
   font-style: italic;
 }
 
-.text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity));
-}
-
 .underline {
   text-decoration-line: underline;
 }
 
-.decoration-slate-300 {
-  text-decoration-color: #cbd5e1;
-}
-
 .decoration-slate-400 {
   text-decoration-color: #94a3b8;
-}
-
-.underline-offset-4 {
-  text-underline-offset: 4px;
 }
 
 .underline-offset-2 {
@@ -595,41 +623,6 @@ video {
 
 .duration-100 {
   transition-duration: 100ms;
-}
-
-@font-face {
-  font-family: "ColfaxAI";
-
-  src: url("./assets/fonts/ColfaxAIRegular.woff2") format("woff2");
-
-  font-weight: normal;
-
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "ColfaxAI";
-
-  src: url("./assets/fonts/ColfaxAIRegularItalic.woff2") format("woff2");
-
-  font-weight: normal;
-
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "ColfaxAI";
-
-  src: url("./assets/fonts/ColfaxAIBold.woff2") format("woff2");
-
-  font-weight: bold;
-
-  font-style: italic;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .ProseMirror {
@@ -648,23 +641,6 @@ body {
   h6 {
     line-height: 1.1;
   }
-  code {
-    background-color: rgba(#616161, 0.1);
-    color: #616161;
-  }
-  pre {
-    background: #0d0d0d;
-    color: #fff;
-    font-family: "JetBrainsMono", monospace;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-    code {
-      color: inherit;
-      padding: 0;
-      background: none;
-      font-size: 0.8rem;
-    }
-  }
   img {
     max-width: 100%;
     height: auto;
@@ -674,9 +650,29 @@ body {
     border-left: 2px solid rgba(#0d0d0d, 0.1);
   }
   hr {
-    border: none;
-    border-top: 2px solid rgba(#0d0d0d, 0.1);
-    margin: 2rem 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  hr {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  hr {
+    border-width: 0px;
+  }
+  hr {
+    border-top-width: 1px;
+  }
+  hr {
+    --tw-border-opacity: 1;
+    border-color: rgb(203 213 225 / var(--tw-border-opacity));
+  }
+  p.is-editor-empty:first-child::before {
+    color: #adb5bd;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
   }
 }
 
@@ -685,24 +681,16 @@ body {
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
-.hover\:text-opacity-70:hover {
-  --tw-text-opacity: 0.7;
-}
-
-.hover\:opacity-70:hover {
-  opacity: 0.7;
-}
-
 .hover\:opacity-50:hover {
   opacity: 0.5;
-}
-
-.focus\:bg-red-500:focus {
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.group:hover .group-hover\:bg-slate-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
 }
