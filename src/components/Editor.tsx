@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Link from "@tiptap/extension-link";
-import Code from "@tiptap/extension-code";
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
@@ -12,13 +11,6 @@ const LinkExt = Link.configure({
   HTMLAttributes: {
     class:
       "underline decoration-slate-400 underline-offset-2 cursor-pointer hover:opacity-50",
-  },
-});
-
-const CodeExt = Code.configure({
-  HTMLAttributes: {
-    class:
-      "bg-slate-100 rounded-md px-1 py-0.5 group-hover:bg-slate-200 transition-colors duration-100 align-center",
   },
 });
 
@@ -59,7 +51,7 @@ const EditorComponent = ({
   const [content, setContent] = useState<string | null>(initialContent);
 
   const editor = useEditor({
-    extensions: [StarterKit, LinkExt, CodeExt, MarkdownExt, PlaceholderExt],
+    extensions: [StarterKitExt, LinkExt, MarkdownExt, PlaceholderExt],
     content,
     editorProps: {
       attributes: {
