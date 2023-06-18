@@ -6,9 +6,10 @@ import {
   readTextFile,
   writeFile,
 } from "@tauri-apps/api/fs";
+import { isDevelopment } from "./environment";
 
 // TODO: add a setting for this
-export const DATA_FOLDER = "Duck";
+export const DATA_FOLDER = isDevelopment ? "Duck-dev" : "Duck";
 
 const fsDirOpts: FsDirOptions = {
   dir: BaseDirectory.Document,
