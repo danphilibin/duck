@@ -5,6 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 import Placeholder from "@tiptap/extension-placeholder";
 import { useSaveContent } from "../utils/editor";
+import { getTodayHeader } from "../utils/files";
 
 const LinkExt = Link.configure({
   autolink: false,
@@ -55,7 +56,7 @@ const EditorComponent = ({
     content,
     editorProps: {
       attributes: {
-        class: "min-h-[200px] focus:outline-none text-sm p-3 rounded-lg group",
+        class: "focus:outline-none text-sm p-4 pt-3 rounded-lg group",
       },
     },
     onUpdate: ({ editor }) => {
@@ -66,8 +67,11 @@ const EditorComponent = ({
   useSaveContent(content, editor);
 
   return (
-    <div>
-      <EditorContent editor={editor} />
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-none text-lg font-semibold pt-10 p-4 pb-0 cursor-default">
+        {getTodayHeader().replace(/^# /, "")}
+      </div>
+      <EditorContent editor={editor} className="flex-1 flex flex-col" />
       {/* <MarkdownPreview editor={editor} /> */}
     </div>
   );

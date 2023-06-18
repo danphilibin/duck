@@ -9,7 +9,9 @@ export function useInitialContent() {
   const [contents, setContents] = useState<string | null>(null);
 
   useEffect(() => {
-    getTodayFileContents().then((res) => (res ? setContents(res) : null));
+    getTodayFileContents().then((res) =>
+      res !== undefined ? setContents(res) : null
+    );
   }, []);
 
   return contents;

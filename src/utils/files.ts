@@ -24,7 +24,7 @@ function getTodayFileName() {
   return `${date.getFullYear()}-${month}-${day}.md`;
 }
 
-function getTodayHeader() {
+export function getTodayHeader() {
   // header format: # Tue Apr 04 2023
   const date = new Date();
   return `# ${date.toDateString()}`;
@@ -55,8 +55,9 @@ export async function getTodayFileContents() {
       contents = await readTextFile(filePath, fsDirOpts);
     }
 
-    if (!contents) {
-      contents = getTodayHeader() + "  \n\n ";
+    // remove the header if it exists
+    if (contents.startsWith(getTodayHeader())) {
+      contents = contents.slice(getTodayHeader().length + 2);
     }
 
     return contents;
@@ -69,8 +70,15 @@ export async function writeToFile(contents: string) {
   try {
     await setupStorage();
     const filePath = getTodayFilePath();
+    const fileContents = getTodayHeader() + "\n\n" + contents;
 
-    await writeFile({ contents, path: filePath }, fsDirOpts);
+    await writeFile(
+      {
+        contents: fileContents,
+        path: filePath,
+      },
+      fsDirOpts
+    );
   } catch (e) {
     console.error(e);
   }
