@@ -34,25 +34,6 @@ function MarkdownPreview({ editor }: { editor: Editor | null }) {
   );
 }
 
-const StarterKitExt = StarterKit.extend({
-  addKeyboardShortcuts() {
-    return {
-      // tiptap swallows the global preferences shortcut so we have to re-define it here
-      "Mod-,": () => {
-        window.dispatchEvent(new CustomEvent("toggle-preferences"));
-        return true;
-      },
-    };
-  },
-}).configure({
-  code: {
-    HTMLAttributes: {
-      class:
-        "bg-slate-100 rounded-md px-1 py-0.5 group-hover:bg-slate-200 transition-colors duration-100 align-center",
-    },
-  },
-});
-
 const EditorComponent = ({
   initialContent,
 }: {
@@ -62,7 +43,7 @@ const EditorComponent = ({
   const [content, setContent] = useState<string | null>(initialContent);
 
   const editor = useEditor({
-    extensions: [StarterKitExt, LinkExt, MarkdownExt, PlaceholderExt],
+    extensions: [StarterKit, LinkExt, MarkdownExt, PlaceholderExt],
     content,
     editorProps: {
       attributes: {

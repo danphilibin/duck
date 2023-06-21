@@ -63,4 +63,8 @@
   pre {
     @apply my-4 bg-slate-100 rounded-md p-3 !text-xs;
   }
+
+  code {
+    @apply bg-slate-100 rounded-md px-1 py-0.5 group-hover:bg-slate-200 transition-colors duration-100;
+  }
 }
