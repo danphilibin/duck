@@ -34,7 +34,17 @@ function MarkdownPreview({ editor }: { editor: Editor | null }) {
   );
 }
 
-const StarterKitExt = StarterKit.configure({
+const StarterKitExt = StarterKit.extend({
+  addKeyboardShortcuts() {
+    return {
+      // tiptap swallows the global preferences shortcut so we have to re-define it here
+      "Mod-,": () => {
+        window.dispatchEvent(new CustomEvent("toggle-preferences"));
+        return true;
+      },
+    };
+  },
+}).configure({
   code: {
     HTMLAttributes: {
       class:
@@ -56,7 +66,7 @@ const EditorComponent = ({
     content,
     editorProps: {
       attributes: {
-        class: "focus:outline-none text-sm p-4 pt-3 rounded-lg group",
+        class: "focus:outline-none text-sm p-[6%] pt-3 rounded-lg group",
       },
     },
     onUpdate: ({ editor }) => {
@@ -68,7 +78,7 @@ const EditorComponent = ({
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="flex-none text-lg font-semibold pt-10 p-4 pb-0 cursor-default">
+      <div className="flex-none text-lg font-semibold pt-10 p-[6%] pb-0 cursor-default">
         {getTodayHeader().replace(/^# /, "")}
       </div>
       <EditorContent editor={editor} className="flex-1 flex flex-col" />
