@@ -1,18 +1,13 @@
 import {
-  BaseDirectory,
   createDir,
   exists,
   FsDirOptions,
   readTextFile,
   writeFile,
 } from "@tauri-apps/api/fs";
-import { isDevelopment } from "./environment";
-
-// TODO: add a setting for this
-export const DATA_FOLDER = isDevelopment ? "Duck-dev" : "Duck";
+import { DATA_DIR_KEY } from "./storage";
 
 const fsDirOpts: FsDirOptions = {
-  dir: BaseDirectory.Document,
   recursive: true,
 };
 
@@ -30,14 +25,31 @@ export function getTodayHeader() {
   return `# ${date.toDateString()}`;
 }
 
-function getTodayFilePath() {
-  return `${DATA_FOLDER}/${getTodayFileName()}`;
+export async function getDataDir(): Promise<string | null> {
+  return localStorage.get(DATA_DIR_KEY).then((dir: string | undefined) => {
+    if (!dir) {
+      return null;
+    }
+    return String(dir);
+  });
+}
+
+async function getTodayFilePath(): Promise<string> {
+  const dir = await getDataDir();
+
+  if (!dir) throw new Error("Data folder not set");
+
+  return `${dir}/${getTodayFileName()}`;
 }
 
 async function setupStorage() {
   try {
-    if (!(await exists(DATA_FOLDER, fsDirOpts))) {
-      await createDir(DATA_FOLDER, fsDirOpts);
+    const dir = await getDataDir();
+
+    if (!dir) throw new Error("Data folder not set");
+
+    if (!(await exists(dir, fsDirOpts))) {
+      await createDir(dir, fsDirOpts);
     }
   } catch (e) {
     console.error(e);
@@ -47,7 +59,7 @@ async function setupStorage() {
 export async function getTodayFileContents() {
   try {
     await setupStorage();
-    const filePath = getTodayFilePath();
+    const filePath = await getTodayFilePath();
 
     let contents = "";
 
@@ -69,7 +81,7 @@ export async function getTodayFileContents() {
 export async function writeToFile(contents: string) {
   try {
     await setupStorage();
-    const filePath = getTodayFilePath();
+    const filePath = await getTodayFilePath();
     const fileContents = getTodayHeader() + "\n\n" + contents;
 
     await writeFile(

@@ -21,7 +21,7 @@
         "startDragging": true
       },
       "fs": {
-        "scope": ["$APP/*", "$DESKTOP/*", "$DOCUMENT/**"],
+        "scope": ["$APP/*"],
         "readFile": true,
         "writeFile": true,
         "readDir": true,
@@ -30,6 +30,9 @@
       },
       "path": {
         "all": true
+      },
+      "dialog": {
+        "open": true
       }
     },
     "bundle": {
@@ -46,7 +49,7 @@
         "fullscreen": false,
         "resizable": true,
         "title": "duck",
-        "width": 360,
+        "width": 380,
         "height": 570,
         "alwaysOnTop": true,
         "titleBarStyle": "Overlay",
