@@ -18,6 +18,7 @@ function App() {
       ) : (
         <>
           <Editor initialContent={initialContent} />
+          <Preferences />
         </>
       )}
     </>
