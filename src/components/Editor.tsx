@@ -58,7 +58,7 @@ const EditorComponent = ({
   useSaveContent(content, editor);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-300">
+    <div className="min-h-screen flex flex-col">
       <div className="flex-none text-lg font-semibold pt-10 p-[7%] pb-0 cursor-default">
         {getTodayHeader().replace(/^# /, "")}
       </div>
