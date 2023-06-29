@@ -6,6 +6,7 @@ export const DATA_DIR_KEY = "data_dir";
 export async function selectDataFolder() {
   return open({
     directory: true,
+    recursive: true,
     defaultPath: await homeDir(),
   });
 }

@@ -1,15 +1,18 @@
 import {
+  BaseDirectory,
   createDir,
   exists,
   FsDirOptions,
   readTextFile,
   writeFile,
 } from "@tauri-apps/api/fs";
-import { DATA_DIR_KEY } from "./storage";
 
 const fsDirOpts: FsDirOptions = {
+  dir: BaseDirectory.Document,
   recursive: true,
 };
+
+const STORAGE_DIR_KEY = "storageDir";
 
 function getTodayFileName() {
   // name format: YYYY-MM-DD.md
@@ -25,17 +28,12 @@ export function getTodayHeader() {
   return `# ${date.toDateString()}`;
 }
 
-export async function getDataDir(): Promise<string | null> {
-  return localStorage.get(DATA_DIR_KEY).then((dir: string | undefined) => {
-    if (!dir) {
-      return null;
-    }
-    return String(dir);
-  });
+function getStorageDir(): string | null {
+  return JSON.parse(localStorage.getItem(STORAGE_DIR_KEY) ?? "");
 }
 
 async function getTodayFilePath(): Promise<string> {
-  const dir = await getDataDir();
+  const dir = getStorageDir();
 
   if (!dir) throw new Error("Data folder not set");
 
@@ -44,13 +42,15 @@ async function getTodayFilePath(): Promise<string> {
 
 async function setupStorage() {
   try {
-    const dir = await getDataDir();
+    const dir = getStorageDir();
 
     if (!dir) throw new Error("Data folder not set");
 
     if (!(await exists(dir, fsDirOpts))) {
       await createDir(dir, fsDirOpts);
     }
+
+    console.log("Confirmed storage dir exists:", dir);
   } catch (e) {
     console.error(e);
   }
@@ -63,14 +63,21 @@ export async function getTodayFileContents() {
 
     let contents = "";
 
+    console.log("Checking if today's file already exists");
+
     if (await exists(filePath, fsDirOpts)) {
+      console.log("File does exist, reading contents");
       contents = await readTextFile(filePath, fsDirOpts);
+    } else {
+      console.log("File does not exist, creating one");
     }
 
     // remove the header if it exists
     if (contents.startsWith(getTodayHeader())) {
-      contents = contents.slice(getTodayHeader().length + 2);
+      contents = contents.slice(getTodayHeader().length);
     }
+
+    contents = contents.trim();
 
     return contents;
   } catch (e) {
