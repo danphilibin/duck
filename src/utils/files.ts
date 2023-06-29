@@ -6,13 +6,23 @@ import {
   readTextFile,
   writeFile,
 } from "@tauri-apps/api/fs";
+import { open } from "@tauri-apps/api/dialog";
+import { homeDir } from "@tauri-apps/api/path";
 
 const fsDirOpts: FsDirOptions = {
   dir: BaseDirectory.Document,
   recursive: true,
 };
 
-const STORAGE_DIR_KEY = "storageDir";
+export const STORAGE_DIR_KEY = "storageDir";
+
+export async function selectDataFolder() {
+  return open({
+    directory: true,
+    recursive: true,
+    defaultPath: await homeDir(),
+  });
+}
 
 function getTodayFileName() {
   // name format: YYYY-MM-DD.md
@@ -29,7 +39,8 @@ export function getTodayHeader() {
 }
 
 function getStorageDir(): string | null {
-  return JSON.parse(localStorage.getItem(STORAGE_DIR_KEY) ?? "");
+  const dir = localStorage.getItem(STORAGE_DIR_KEY) ?? "";
+  return dir ? JSON.parse(dir) : null;
 }
 
 async function getTodayFilePath(): Promise<string> {
@@ -43,6 +54,7 @@ async function getTodayFilePath(): Promise<string> {
 async function setupStorage() {
   try {
     const dir = getStorageDir();
+    console.log("dir", dir);
 
     if (!dir) throw new Error("Data folder not set");
 

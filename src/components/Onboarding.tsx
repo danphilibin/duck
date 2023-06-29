@@ -1,13 +1,13 @@
 import { useLocalStorage } from "usehooks-ts";
-import { DATA_DIR_KEY, selectDataFolder } from "../utils/storage";
+import { STORAGE_DIR_KEY, selectDataFolder } from "../utils/files";
 
 export function useShouldShowOnboarding() {
-  const [dataDir] = useLocalStorage(DATA_DIR_KEY, "");
+  const [dataDir] = useLocalStorage(STORAGE_DIR_KEY, "");
   return !dataDir;
 }
 
 export default function Onboarding() {
-  const [sdir, setDataDir] = useLocalStorage(DATA_DIR_KEY, "");
+  const [sdir, setDataDir] = useLocalStorage(STORAGE_DIR_KEY, "");
 
   return (
     <div className="min-h-screen flex items-center justify-center">
