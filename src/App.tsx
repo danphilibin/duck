@@ -2,6 +2,7 @@ import Editor from "./components/Editor";
 import Preferences from "./components/Preferences";
 import { useInitialContent } from "./utils/editor";
 import Onboarding, { useShouldShowOnboarding } from "./components/Onboarding";
+import Notifications from "./components/Notifications";
 
 function App() {
   const initialContent = useInitialContent();
@@ -13,6 +14,7 @@ function App() {
         className="h-10 bg-gradient-to-b from-white to-white/0 z-30 fixed top-0 left-0 w-full"
         data-tauri-drag-region
       ></div>
+      <Notifications />
       {shouldShowOnboarding ? (
         <Onboarding />
       ) : (
