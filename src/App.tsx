@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <div
-        className="h-10 bg-gradient-to-b from-white to-white/0 z-30 fixed top-0 left-0 w-full"
+        className="h-10 bg-gradient-to-b from-slate-300 to-slate-300/0 z-30 fixed top-0 left-0 w-full"
         data-tauri-drag-region
       ></div>
       {shouldShowOnboarding ? (

@@ -47,7 +47,7 @@ const EditorComponent = ({
     content,
     editorProps: {
       attributes: {
-        class: "focus:outline-none text-sm p-[6%] pt-3 rounded-lg group",
+        class: "focus:outline-none text-sm p-[7%] pt-3 rounded-lg group",
       },
     },
     onUpdate: ({ editor }) => {
@@ -58,8 +58,8 @@ const EditorComponent = ({
   useSaveContent(content, editor);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-none text-lg font-semibold pt-10 p-[6%] pb-0 cursor-default">
+    <div className="min-h-screen flex flex-col bg-slate-300">
+      <div className="flex-none text-lg font-semibold pt-10 p-[7%] pb-0 cursor-default">
         {getTodayHeader().replace(/^# /, "")}
       </div>
       <EditorContent editor={editor} className="flex-1 flex flex-col" />

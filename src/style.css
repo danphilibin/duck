@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .ProseMirror {
-  @apply text-slate-900 pb-[100%];
+  @apply text-slate-900 pb-[100%] leading-5;
 
   > * + * {
     margin-top: 0.75em;
@@ -34,12 +34,12 @@
   }
 
   hr {
-    @apply border-0 border-t border-slate-300 my-5 mx-0;
+    @apply border-0 border-t border-slate-400 my-5 mx-0;
   }
 
   /* placeholder */
   p.is-editor-empty:first-child::before {
-    @apply text-slate-400 float-left h-0 pointer-events-none content-[attr(data-placeholder)];
+    @apply text-slate-500 float-left h-0 pointer-events-none content-[attr(data-placeholder)];
   }
 
   ul,
@@ -65,6 +65,6 @@
   }
 
   code {
-    @apply bg-slate-100 rounded-md px-1 py-0.5 group-hover:bg-slate-200 transition-colors duration-100;
+    @apply bg-white/30 text-[13px] rounded-md px-1 py-0.5 group-hover:bg-slate-200 transition-colors duration-100 mx-0.5;
   }
 }
