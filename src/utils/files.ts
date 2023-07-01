@@ -24,13 +24,6 @@ export async function selectDataFolder() {
   });
 }
 
-export function getTodayFileName(date = new Date()) {
-  // name format: YYYY-MM-DD.md
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  return `${date.getFullYear()}-${month}-${day}.md`;
-}
-
 function filenameToDate(filename: string) {
   const [year, month, day] = filename.split("-").map((x) => parseInt(x, 10));
   return new Date(year, month - 1, day);
