@@ -24,17 +24,20 @@ export async function selectDataFolder() {
   });
 }
 
-function getTodayFileName() {
+export function getTodayFileName(date = new Date()) {
   // name format: YYYY-MM-DD.md
-  const date = new Date();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
   return `${date.getFullYear()}-${month}-${day}.md`;
 }
 
-export function getTodayHeader() {
+function filenameToDate(filename: string) {
+  const [year, month, day] = filename.split("-").map((x) => parseInt(x, 10));
+  return new Date(year, month - 1, day);
+}
+
+export function getDailyHeader(date = new Date()) {
   // header format: # Tue Apr 04 2023
-  const date = new Date();
   return `# ${date.toDateString()}`;
 }
 
@@ -43,70 +46,53 @@ function getStorageDir(): string | null {
   return dir ? JSON.parse(dir) : null;
 }
 
-async function getTodayFilePath(): Promise<string> {
+function getFullFilePath(filename: string): string {
   const dir = getStorageDir();
 
   if (!dir) throw new Error("Data folder not set");
 
-  return `${dir}/${getTodayFileName()}`;
+  return `${dir}/${filename}`;
 }
 
 async function setupStorage() {
-  try {
-    const dir = getStorageDir();
-    console.log("dir", dir);
+  const dir = getStorageDir();
 
-    if (!dir) throw new Error("Data folder not set");
+  if (!dir) throw new Error("Data folder not set");
 
-    if (!(await exists(dir, fsDirOpts))) {
-      await createDir(dir, fsDirOpts);
-    }
-
-    console.log("Confirmed storage dir exists:", dir);
-  } catch (e) {
-    console.error(e);
+  if (!(await exists(dir, fsDirOpts))) {
+    await createDir(dir, fsDirOpts);
   }
 }
 
-export async function getTodayFileContents() {
-  try {
-    await setupStorage();
-    const filePath = await getTodayFilePath();
+export async function getFileContents(filename: string) {
+  await setupStorage();
+  const filePath = getFullFilePath(filename);
 
-    let contents = "";
+  let content = "";
 
-    console.log("Checking if today's file already exists");
-
-    if (await exists(filePath, fsDirOpts)) {
-      console.log("File does exist, reading contents");
-      contents = await readTextFile(filePath, fsDirOpts);
-    } else {
-      console.log("File does not exist, creating one");
-    }
-
-    // remove the header if it exists
-    if (contents.startsWith(getTodayHeader())) {
-      contents = contents.slice(getTodayHeader().length);
-    }
-
-    contents = contents.trim();
-
-    return contents;
-  } catch (e) {
-    console.error(e);
+  if (await exists(filePath, fsDirOpts)) {
+    console.log("📄 Found existing file, reading contents");
+    content = await readTextFile(filePath, fsDirOpts);
+  } else {
+    console.log("📄 Creating new file for today");
+    content = getDailyHeader(filenameToDate(filename));
   }
+
+  return {
+    filename,
+    content: content.trim(),
+  };
 }
 
-export async function writeToFile(contents: string) {
+export async function writeToFile(filename: string, contents: string) {
   try {
     await setupStorage();
-    const filePath = await getTodayFilePath();
-    const fileContents = getTodayHeader() + "\n\n" + contents;
+    const filePath = getFullFilePath(filename);
 
     await writeFile(
       {
-        contents: fileContents,
         path: filePath,
+        contents,
       },
       fsDirOpts
     );

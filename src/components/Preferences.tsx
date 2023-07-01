@@ -1,8 +1,7 @@
 import { useDialogStore } from "@ariakit/react";
 import Dialog from "./Dialog";
 import { useHotkeys } from "react-hotkeys-hook";
-import { useEventListener } from "usehooks-ts";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useEvent } from "react-use";
 import { STORAGE_DIR_KEY, selectDataFolder } from "../utils/files";
 
 export default function Preferences() {
@@ -13,15 +12,19 @@ export default function Preferences() {
   const [dataFolder, setDataFolder] = useLocalStorage(STORAGE_DIR_KEY, "");
 
   useHotkeys("meta+comma", () => dialog.toggle(), [dialog]);
-  useEventListener("toggle-preferences", dialog.toggle);
-  useEventListener("show-preferences", dialog.show);
+  useEvent("toggle-preferences", dialog.toggle);
+  useEvent("show-preferences", dialog.show);
 
   function onSelect() {
-    selectDataFolder().then((res) => {
-      if (typeof res == "string") {
-        setDataFolder(res);
-      }
-    });
+    selectDataFolder()
+      .then((res) => {
+        if (typeof res == "string") {
+          setDataFolder(res);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   return (

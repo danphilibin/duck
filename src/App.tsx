@@ -1,11 +1,9 @@
-import Editor from "./components/Editor";
 import Preferences from "./components/Preferences";
-import { useInitialContent } from "./utils/editor";
 import Onboarding, { useShouldShowOnboarding } from "./components/Onboarding";
+import DailyEditor from "./components/DailyEditor";
 import Notifications from "./components/Notifications";
 
 function App() {
-  const initialContent = useInitialContent();
   const shouldShowOnboarding = useShouldShowOnboarding();
 
   return (
@@ -19,7 +17,7 @@ function App() {
         <Onboarding />
       ) : (
         <>
-          <Editor initialContent={initialContent} />
+          <DailyEditor />
           <Preferences />
         </>
       )}

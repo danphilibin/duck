@@ -1,4 +1,4 @@
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage } from "react-use";
 import { STORAGE_DIR_KEY, selectDataFolder } from "../utils/files";
 
 export function useShouldShowOnboarding() {
@@ -25,10 +25,14 @@ export default function Onboarding() {
         <button
           className="rounded-md border border-gray-300 shadow-sm py-1.5 px-4 text-gray-700 font-medium text-sm hover:text-gray-700/80"
           onClick={() => {
-            selectDataFolder().then((res) => {
-              if (typeof res !== "string") return;
-              setDataDir(res);
-            });
+            selectDataFolder()
+              .then((res) => {
+                if (typeof res !== "string") return;
+                setDataDir(res);
+              })
+              .catch((err) => {
+                console.error(err);
+              });
           }}
         >
           Select a location...
