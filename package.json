@@ -15,6 +15,7 @@
   "dependencies": {
     "@ariakit/react": "^0.2.10",
     "@tauri-apps/api": "^1.4.0",
+    "@tiptap/core": "^2.0.3",
     "@tiptap/extension-link": "^2.0.3",
     "@tiptap/extension-placeholder": "^2.0.3",
     "@tiptap/pm": "^2.0.3",
