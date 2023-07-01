@@ -1,4 +1,4 @@
-import { useLocalStorage } from "react-use";
+import { useLocalStorage } from "../utils/useLocalStorage";
 import { STORAGE_DIR_KEY, selectDataFolder } from "../utils/files";
 import Icon from "../assets/icon_1024x1024.png";
 
