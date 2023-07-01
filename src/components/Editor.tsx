@@ -46,16 +46,6 @@ export function useSaveContent(
   }, [editor, writeFileFn, lastUpdateKey, isReadyToSave]);
 }
 
-function MarkdownPreview({ editor }: { editor: Editor | null }) {
-  return (
-    <div className="mt-4 text-sm">
-      <pre className="whitespace-pre-wrap">
-        {editor?.storage.markdown.getMarkdown()}
-      </pre>
-    </div>
-  );
-}
-
 const EditorComponent = ({ filename }: { filename: string }) => {
   const [state, dispatch] = useReducer(dailyStorageReducer, {
     ...initialDailyStorageState,

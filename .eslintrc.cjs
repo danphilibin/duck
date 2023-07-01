@@ -1,18 +1,22 @@
 /* eslint-env node */
 module.exports = {
-  root: true,
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
+    project: "./tsconfig.json",
   },
+  ignorePatterns: [".eslintrc.cjs", "node_modules/"],
   plugins: ["@typescript-eslint", "react", "promise"],
   rules: {
-    "react-hooks/exhaustive-deps": ["warn"],
-    "react/react-in-jsx-scope": ["off"],
+    "react-hooks/exhaustive-deps": "warn",
+    "react/react-in-jsx-scope": "off",
     "no-case-declarations": "off",
-    "promise/always-return": ["off"],
+    "promise/always-return": "off",
+    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/await-thenable": "error",
+    "@typescript-eslint/no-misused-promises": "error",
   },
   extends: [
     "eslint:recommended",
