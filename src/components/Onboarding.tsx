@@ -1,5 +1,6 @@
 import { useLocalStorage } from "react-use";
 import { STORAGE_DIR_KEY, selectDataFolder } from "../utils/files";
+import Icon from "../assets/icon_1024x1024.png";
 
 export function useShouldShowOnboarding() {
   const [dataDir] = useLocalStorage(STORAGE_DIR_KEY, "");
@@ -7,15 +8,12 @@ export function useShouldShowOnboarding() {
 }
 
 export default function Onboarding() {
-  const [sdir, setDataDir] = useLocalStorage(STORAGE_DIR_KEY, "");
+  const [, setDataDir] = useLocalStorage(STORAGE_DIR_KEY, "");
 
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-[380px] w-full px-4 mx-auto text-center leading-5">
-        <img
-          src="../../src-tauri/icons/icon_1024x1024.png"
-          className="w-16 h-16 mx-auto mb-1"
-        />
+        <img src={Icon} className="w-16 h-16 mx-auto mb-1" />
         <h1 className="text-2xl font-semibold tracking-tight">Duck</h1>
         <p className="mt-1">A daily programming notepad.</p>
         <p className="text-sm text-gray-600 mt-6 mb-4">
