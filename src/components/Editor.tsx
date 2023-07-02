@@ -31,6 +31,15 @@ const PlaceholderExt = Placeholder.configure({
   placeholder: "Start typing...",
 });
 
+const StarterKitExt = StarterKit.extend({
+  addKeyboardShortcuts() {
+    return {
+      // tiptap seems to swallow this shortcut while the editor is focused
+      "Mod-,": () => dispatchEvent(new Event("show-preferences")),
+    };
+  },
+}).configure();
+
 export function useSaveContent(
   state: StorageState,
   editor: Editor | null,
@@ -53,7 +62,7 @@ const EditorComponent = ({ filename }: { filename: string }) => {
   });
 
   const editor = useEditor({
-    extensions: [StarterKit, LinkExt, MarkdownExt, PlaceholderExt],
+    extensions: [StarterKitExt, LinkExt, MarkdownExt, PlaceholderExt],
     content: state.content,
     editorProps: {
       attributes: {
