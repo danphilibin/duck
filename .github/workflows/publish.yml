@@ -28,8 +28,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: duck-v__VERSION__
-          releaseName: "Duck v__VERSION__"
+          tagName: v__VERSION__
+          releaseName: "v__VERSION__"
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
+          includeUpdaterJson: true
           prerelease: false
