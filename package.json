@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "npm-run-all --parallel dev:*",
     "dev:vite": "vite",
-    "dev:css": "npx tailwindcss -i ./src/style.css -o ./src/tailwind.css --watch",
-    "build": "tsc && vite build",
+    "dev:css": "yarn css -w",
+    "build": "tsc && yarn css && vite build",
+    "css": "npx tailwindcss -i ./src/style.css -o ./src/tailwind.css",
     "preview": "vite preview",
     "tauri": "tauri",
     "lint": "eslint ./src",
