@@ -67,4 +67,8 @@
   code {
     @apply text-[13px] text-purple-600 rounded-md tracking-tight group-hover:bg-slate-200 transition-colors duration-100 mx-0.5;
   }
+
+  pre code {
+    @apply text-slate-900;
+  }
 }
