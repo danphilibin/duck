@@ -11,6 +11,13 @@ import dailyStorageReducer, {
 } from "../utils/useDailyFileStorage";
 import { useOnWindowRefocus } from "../utils/useOnWindowRefocus";
 import { useThrottle } from "react-use";
+import { common, createLowlight } from "lowlight";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import css from "highlight.js/lib/languages/css";
+import js from "highlight.js/lib/languages/javascript";
+import ts from "highlight.js/lib/languages/typescript";
+import html from "highlight.js/lib/languages/xml";
+import "highlight.js/styles/github.css";
 
 const AUTOSAVE_INTERVAL = 1500;
 
@@ -31,6 +38,16 @@ const PlaceholderExt = Placeholder.configure({
   placeholder: "Start typing...",
 });
 
+const lowlight = createLowlight(common);
+lowlight.register("html", html);
+lowlight.register("css", css);
+lowlight.register("js", js);
+lowlight.register("ts", ts);
+
+const SyntaxHighlighterExt = CodeBlockLowlight.configure({
+  lowlight,
+});
+
 const StarterKitExt = StarterKit.extend({
   addKeyboardShortcuts() {
     return {
@@ -38,7 +55,14 @@ const StarterKitExt = StarterKit.extend({
       "Mod-,": () => dispatchEvent(new Event("show-preferences")),
     };
   },
-}).configure();
+  // note: chaining .configure() after .extend() doesn't work
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      codeBlock: false as const,
+    };
+  },
+});
 
 export function useSaveContent(
   state: StorageState,
@@ -62,7 +86,13 @@ const EditorComponent = ({ filename }: { filename: string }) => {
   });
 
   const editor = useEditor({
-    extensions: [StarterKitExt, LinkExt, MarkdownExt, PlaceholderExt],
+    extensions: [
+      StarterKitExt,
+      LinkExt,
+      MarkdownExt,
+      PlaceholderExt,
+      SyntaxHighlighterExt,
+    ],
     content: state.content,
     editorProps: {
       attributes: {
