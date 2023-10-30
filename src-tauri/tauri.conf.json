@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "Duck",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "tauri": {
     "allowlist": {
@@ -21,7 +21,7 @@
         "startDragging": true
       },
       "fs": {
-        "scope": ["$APPDATA/*", "$DOCUMENT/**", "$DOCUMENT/*", "$DOCUMENT"],
+        "scope": ["$APPDATA/*"],
         "readFile": true,
         "writeFile": true,
         "readDir": true,
