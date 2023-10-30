@@ -21,7 +21,7 @@
         "startDragging": true
       },
       "fs": {
-        "scope": ["$APPDATA/*", "$DOCUMENT/**", "$DOCUMENT/*", "$DOCUMENT"],
+        "scope": ["$APPDATA/*"],
         "readFile": true,
         "writeFile": true,
         "readDir": true,
