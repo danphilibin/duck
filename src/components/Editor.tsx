@@ -18,6 +18,9 @@ import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
 import "highlight.js/styles/github.css";
+import TaskItem from "@tiptap/extension-task-item";
+import TaskList from "@tiptap/extension-task-list";
+import Highlight from "@tiptap/extension-highlight";
 
 const AUTOSAVE_INTERVAL = 1500;
 
@@ -64,6 +67,40 @@ const StarterKitExt = StarterKit.extend({
   },
 });
 
+const TaskItemExt = TaskItem.extend({
+  addKeyboardShortcuts() {
+    return {
+      "Mod-l": () => this.editor.commands.toggleTaskList(),
+      Enter: () => this.editor.commands.splitListItem(this.name),
+      Tab: () => this.editor.commands.sinkListItem(this.name),
+      "Shift-Tab": () => this.editor.commands.liftListItem(this.name),
+    };
+  },
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      nested: true,
+    };
+  },
+});
+
+const HighlightExt = Highlight.extend({
+  addKeyboardShortcuts() {
+    return {
+      "Mod-Shift-h": () => this.editor.commands.toggleHighlight(),
+      "Mod-Enter": () => {
+        this.editor.commands.unsetHighlight();
+        setTimeout(() => {
+          this.editor.commands.insertContent(" ", {
+            parseOptions: { preserveWhitespace: "full" },
+          });
+        }, 10);
+        return true;
+      },
+    };
+  },
+});
+
 export function useSaveContent(
   state: StorageState,
   editor: Editor | null,
@@ -92,6 +129,9 @@ const EditorComponent = ({ filename }: { filename: string }) => {
       MarkdownExt,
       PlaceholderExt,
       SyntaxHighlighterExt,
+      TaskList,
+      TaskItemExt,
+      HighlightExt,
     ],
     content: state.content,
     editorProps: {

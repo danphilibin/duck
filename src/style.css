@@ -34,7 +34,7 @@
   }
 
   hr {
-    @apply border-0 border-t border-slate-400 my-5 mx-0;
+    @apply border-0 border-t border-slate-300 my-5 mx-0;
   }
 
   /* placeholder */
@@ -42,21 +42,22 @@
     @apply text-slate-500 float-left h-0 pointer-events-none content-[attr(data-placeholder)];
   }
 
-  ul,
+  ul:not([data-type="taskList"]),
   ol {
     @apply ml-2;
+
+    li {
+      @apply relative pl-4;
+    }
+    li:before {
+      @apply absolute top-0 left-0;
+    }
   }
 
-  ul li,
-  ol li {
-    @apply relative pl-4;
-  }
-  ul li:before {
-    @apply absolute top-0 left-0;
+  ul:not([data-type="taskList"]) li:before {
     content: "-";
   }
   ol li:before {
-    @apply absolute top-0 left-0;
     content: counter(list-item, decimal) ".";
   }
 
@@ -70,5 +71,49 @@
 
   pre code {
     @apply text-slate-900;
+  }
+
+  mark {
+    @apply bg-yellow-200 px-1 rounded;
+  }
+
+  ul[data-type="taskList"] {
+    p {
+      @apply m-0;
+    }
+
+    li {
+      @apply flex;
+
+      > label {
+        @apply flex-none select-none;
+      }
+
+      > div {
+        @apply flex-1 ml-2;
+      }
+    }
+
+    li[data-checked="true"] {
+      > div > p {
+        @apply line-through text-slate-400;
+      }
+    }
+
+    ul,
+    li + li {
+      margin-top: 0.25rem;
+    }
+  }
+
+  input[type="checkbox"] {
+    @apply appearance-none border border-gray-300 rounded w-4 h-4 relative top-0.5 cursor-pointer hover:border-gray-400;
+
+    &:checked {
+      @apply bg-green-600 border-transparent;
+      background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+      background-size: 120% 120%;
+      background-position: center center;
+    }
   }
 }
